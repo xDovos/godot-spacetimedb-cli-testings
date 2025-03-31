@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://bay20k4s5othg"]
+
+[ext_resource type="Script" uid="uid://c7hysixyvvvjx" path="res://SubScenes/logs_control.gd" id="1_tw3hd"]
+
+[node name="LogsControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_tw3hd")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 850.0
+offset_bottom = 628.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Logs"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer2"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer2"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Module Name"
+
+[node name="ModuleNameLineEdit" type="LineEdit" parent="VBoxContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "servertest"
+
+[node name="Label2" type="Label" parent="VBoxContainer2/GridContainer"]
+layout_mode = 2
+text = "Server (Local == Localhost, Maincloud == Maincloud)"
+
+[node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer2/GridContainer"]
+layout_mode = 2
+text = "Local"
+
+[node name="Panel" type="PanelContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer2/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+bbcode_enabled = true
+text = "
+"
+scroll_following = true
+selection_enabled = true
+
+[node name="PrintLogs" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Print Logs"
+
+[connection signal="pressed" from="VBoxContainer2/PrintLogs" to="." method="_on_print_logs_pressed"]

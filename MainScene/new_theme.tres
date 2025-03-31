@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://cggdycwr4g45p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j2q5q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_amlv4"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_amlv4"]
+color = Color(0.446777, 0.446777, 0.446777, 1)
+thickness = 3
+vertical = true
+
+[resource]
+Button/styles/focus = SubResource("StyleBoxEmpty_j2q5q")
+RichTextLabel/constants/LeftTextMargine = 4
+RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_amlv4")
+VSeparator/styles/separator = SubResource("StyleBoxLine_amlv4")

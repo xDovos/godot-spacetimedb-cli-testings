@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgmtwgyqk5rts"]
+
+[ext_resource type="Script" uid="uid://dlq2hao6gsllo" path="res://SubScenes/publish_control.gd" id="1_ji12p"]
+
+[sub_resource type="Gradient" id="Gradient_r0du0"]
+offsets = PackedFloat32Array(0.00265252)
+colors = PackedColorArray(0.26, 0.2431, 0.221, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cm0pq"]
+gradient = SubResource("Gradient_r0du0")
+width = 40
+height = 23
+use_hdr = true
+
+[sub_resource type="Gradient" id="Gradient_fos0i"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.56, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3dxm6"]
+gradient = SubResource("Gradient_fos0i")
+width = 40
+height = 23
+use_hdr = true
+
+[node name="PublishControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_ji12p")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Publish"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Server (Local == Localhost, Maincloud == Maincloud)"
+
+[node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local"
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Module Name"
+
+[node name="ModuleNameLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "servertest"
+
+[node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Module Path"
+
+[node name="ModulePathLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "D:\\GodotGames\\STDB_Server\\server"
+
+[node name="Label4" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Client bindings path "
+
+[node name="ClientPathLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "D:\\GodotGames\\MultiplayerIdleClicker\\module_bindings"
+
+[node name="Label5" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Client Language"
+
+[node name="ClientLanguageOptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "cs"
+popup/item_0/id = 0
+popup/item_1/text = "rust"
+popup/item_1/id = 1
+popup/item_2/text = "typescript"
+popup/item_2/id = 2
+
+[node name="Label6" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Clear Data"
+
+[node name="ClearDataToggle" type="TextureButton" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_cm0pq")
+texture_pressed = SubResource("GradientTexture2D_3dxm6")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CmdOutputLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+drag_and_drop_selection_enabled = false
+
+[node name="PublishButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Publish Module"
+
+[node name="CreateModuleBindingsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create Module Bindings"
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+initial_position = 2
+ok_button_text = "yes"
+dialog_text = "Confirm last CMD line."
+cancel_button_text = "no"
+
+[connection signal="pressed" from="VBoxContainer/PublishButton" to="." method="_on_publish_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreateModuleBindingsButton" to="." method="_on_create_module_bindings_button_pressed"]
+[connection signal="canceled" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

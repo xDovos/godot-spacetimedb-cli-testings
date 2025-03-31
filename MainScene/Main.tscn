@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=3 uid="uid://4ltx33ispet1"]
+
+[ext_resource type="ButtonGroup" uid="uid://bei5ypa7cxe1p" path="res://MainScene/MenuButtonGroup.tres" id="1_glv2v"]
+[ext_resource type="Theme" uid="uid://cggdycwr4g45p" path="res://MainScene/new_theme.tres" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://cv71qwuo2xwj3" path="res://MainScene/main.gd" id="2_fos0i"]
+[ext_resource type="PackedScene" uid="uid://bay20k4s5othg" path="res://SubScenes/logs_control.tscn" id="3_r0du0"]
+[ext_resource type="PackedScene" uid="uid://dgmtwgyqk5rts" path="res://SubScenes/publish_control.tscn" id="4_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://ct0e2xtdkb41e" path="res://SubScenes/schema_control.tscn" id="6_3dxm6"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_uu6xs")
+script = ExtResource("2_fos0i")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Navigation" type="VBoxContainer" parent="HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="LogsButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("1_glv2v")
+text = "Logs"
+
+[node name="SQLButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("1_glv2v")
+text = "SQL"
+
+[node name="PublishButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("1_glv2v")
+text = "Publish"
+
+[node name="ReducersButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("1_glv2v")
+text = "Reducers"
+
+[node name="ShemaButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("1_glv2v")
+text = "Shema"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LogsControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("3_r0du0")]
+layout_mode = 2
+
+[node name="PublishControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("4_cm0pq")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="SchemaControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("6_3dxm6")]
+visible = false
+layout_mode = 2
+
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/LogsButton" to="." method="_on_logs_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/SQLButton" to="." method="_on_sql_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/PublishButton" to="." method="_on_publish_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/ReducersButton" to="." method="_on_reducers_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/ShemaButton" to="." method="_on_shema_button_toggled"]

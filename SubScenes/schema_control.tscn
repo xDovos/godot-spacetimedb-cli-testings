@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct0e2xtdkb41e"]
+
+[ext_resource type="Script" uid="uid://nffwegkavydv" path="res://SubScenes/schema_control.gd" id="1_bc7kg"]
+
+[node name="SchemaControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bc7kg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Shema"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Module Name"
+
+[node name="ModuleNameLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "servertest"
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Server (Local == Localhost, Maincloud == Maincloud)"
+
+[node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Local"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="GetSchemaButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Get Shema"
+
+[connection signal="pressed" from="VBoxContainer/GetSchemaButton" to="." method="_on_get_schema_button_pressed"]
