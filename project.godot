@@ -12,10 +12,20 @@ config_version=5
 
 config/name="SpacetimeDB CLI"
 run/main_scene="uid://4ltx33ispet1"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+
+[autoload]
+
+SpacetimeClient="*res://addons/spacetime_client/SpacetimeClient.cs"
 
 [display]
 
 window/stretch/aspect="expand"
 
+[dotnet]
 
+project/assembly_name="SpacetimeDB CLI"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/spacetime_client/plugin.cfg")

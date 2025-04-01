@@ -1,0 +1,10 @@
+<Project Sdk="Godot.NET.Sdk/4.4.1">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>SpacetimeDBCLI</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SpacetimeDB.ClientSDK" Version="1.0.2" />
+  </ItemGroup>
+</Project>
