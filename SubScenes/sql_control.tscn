@@ -1,17 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct0e2xtdkb41e"]
+[gd_scene load_steps=2 format=3 uid="uid://b73w2uv368ylh"]
 
-[ext_resource type="Script" uid="uid://nffwegkavydv" path="res://SubScenes/schema_control.gd" id="1_bc7kg"]
+[ext_resource type="Script" uid="uid://dfiggeonqq3pt" path="res://SubScenes/sql_control.gd" id="1_nhegm"]
 
-[node name="SchemaControl" type="Control"]
+[node name="SQLControl" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("1_bc7kg")
+script = ExtResource("1_nhegm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -23,7 +21,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Schema"
+text = "SQL"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
@@ -44,11 +42,19 @@ text = "servertest"
 
 [node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Server (Local == Localhost, Maincloud == maincloud)"
+text = "Server (Local == Localhost, Maincloud == Maincloud)"
 
 [node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Local"
+
+[node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "SQL Query"
+
+[node name="SQLLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "SELECT * FROM User"
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -64,13 +70,9 @@ theme_override_constants/margin_bottom = 10
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 2
-bbcode_enabled = true
-scroll_following = true
-selection_enabled = true
 
-[node name="GetSchemaButton" type="Button" parent="VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Get Shema"
+text = "Run Query"
 
-[connection signal="pressed" from="VBoxContainer/GetSchemaButton" to="." method="_on_get_schema_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

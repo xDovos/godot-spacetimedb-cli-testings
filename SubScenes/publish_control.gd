@@ -32,6 +32,7 @@ func _process(delta: float) -> void:
 			var exitcode = OS.get_process_exit_code(cmdPid["pid"])
 			if(exitcode != -1):
 				print(error_string(exitcode))
+				cmd_output_label.append_text("cmd exited with: " + error_string(exitcode))
 				IO = null
 				IOError = null
 				cmdPid.clear()

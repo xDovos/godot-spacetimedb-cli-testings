@@ -52,16 +52,6 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Server (Local == Localhost, Maincloud == Maincloud)"
-
-[node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Local"
-
 [node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Module Name"
@@ -69,6 +59,16 @@ text = "Module Name"
 [node name="ModuleNameLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "servertest"
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Server (Local == Localhost, Maincloud == maincloud)"
+
+[node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Local"
 
 [node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2

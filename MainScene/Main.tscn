@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://4ltx33ispet1"]
+[gd_scene load_steps=8 format=3 uid="uid://4ltx33ispet1"]
 
 [ext_resource type="ButtonGroup" uid="uid://bei5ypa7cxe1p" path="res://MainScene/MenuButtonGroup.tres" id="1_glv2v"]
 [ext_resource type="Theme" uid="uid://cggdycwr4g45p" path="res://MainScene/new_theme.tres" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://cv71qwuo2xwj3" path="res://MainScene/main.gd" id="2_fos0i"]
 [ext_resource type="PackedScene" uid="uid://bay20k4s5othg" path="res://SubScenes/logs_control.tscn" id="3_r0du0"]
 [ext_resource type="PackedScene" uid="uid://dgmtwgyqk5rts" path="res://SubScenes/publish_control.tscn" id="4_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://b73w2uv368ylh" path="res://SubScenes/sql_control.tscn" id="5_3dbgo"]
 [ext_resource type="PackedScene" uid="uid://ct0e2xtdkb41e" path="res://SubScenes/schema_control.tscn" id="6_3dxm6"]
 
 [node name="Control" type="Control"]
@@ -63,11 +64,11 @@ toggle_mode = true
 button_group = ExtResource("1_glv2v")
 text = "Reducers"
 
-[node name="ShemaButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+[node name="SchemaButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("1_glv2v")
-text = "Shema"
+text = "Schema"
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 layout_mode = 2
@@ -83,6 +84,10 @@ theme_override_constants/margin_bottom = 10
 [node name="LogsControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("3_r0du0")]
 layout_mode = 2
 
+[node name="SQLControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("5_3dbgo")]
+visible = false
+layout_mode = 2
+
 [node name="PublishControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("4_cm0pq")]
 visible = false
 layout_mode = 2
@@ -96,4 +101,4 @@ layout_mode = 2
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/SQLButton" to="." method="_on_sql_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/PublishButton" to="." method="_on_publish_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/ReducersButton" to="." method="_on_reducers_button_toggled"]
-[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/ShemaButton" to="." method="_on_shema_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/SchemaButton" to="." method="_on_schema_button_toggled"]
