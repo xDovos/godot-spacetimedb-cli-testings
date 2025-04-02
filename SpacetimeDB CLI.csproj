@@ -7,4 +7,5 @@
   <ItemGroup>
     <PackageReference Include="SpacetimeDB.ClientSDK" Version="1.0.2" />
   </ItemGroup>
+  
 </Project>

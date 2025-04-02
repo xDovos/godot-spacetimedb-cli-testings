@@ -39,39 +39,50 @@ func save_config():
 func upate_spacetime_client():
 	print("\nModifying the BaseSpacetimeClient...");
 	
-#	Adding all the callbacks signals for each table
-	var spacetime_classes = [];
-	for file_name in DirAccess.open("res://module_bindings/Tables").get_files():
-		if file_name.substr(len(file_name)-3, 3) == ".cs":
-			var spacetime_type_name = file_name.substr(0, len(file_name)-5);
-			spacetime_classes.append(spacetime_type_name);
-	
 	#	Generating base content
 	var content = SPACETIME_CLIENT_CONTENT;
 	
 	content = insert_at_pattern(content, "HOST", " = \"" + $Host.text+"\"");
 	content = insert_at_pattern(content, "MODULE", " = \"" + $Module.text+"\"");
-	
-	for spdb_class in spacetime_classes:
-		# Adding signals
-		content = insert_at_pattern(content, "// Insert Signals", "\n	[Signal]\n	public delegate void "+spdb_class+"InsertedEventHandler("+spdb_class+" inserted_row);");
-		content = insert_at_pattern(content, "// Update Signals", "\n	[Signal]\n	public delegate void "+spdb_class+"UpdatedEventHandler("+spdb_class+" old_row, "+spdb_class+" new_row);");
-		content = insert_at_pattern(content, "// Delete Signals", "\n	[Signal]\n	public delegate void "+spdb_class+"DeletedEventHandler("+spdb_class+" deleted_row);");
+	var modulePath = "res://module_bindings"
+#	Adding all the callbacks signals for each table
+	for file_name in DirAccess.open(modulePath+"/Tables").get_files():
+		#print(file_name)
+		if file_name.get_extension() == "cs":
 			
-#		Adding callbacks
-		content = insert_at_pattern(content, "// Add Insert Callbacks", "\n		conn.Db."+spdb_class+".OnInsert += "+spdb_class+"_OnInsert;");
-		content = insert_at_pattern(content, "// Add Update Callbacks", "\n		conn.Db."+spdb_class+".OnUpdate += "+spdb_class+"_OnUpdate;");
-		content = insert_at_pattern(content, "// Add Delete Callbacks", "\n		conn.Db."+spdb_class+".OnDelete += "+spdb_class+"_OnDelete;");
+			var file = FileAccess.open(modulePath+"/Tables/"+file_name, FileAccess.READ)
+			if(file.get_error() != OK):
+				print(error_string(file.get_error()))
+			var text = file.get_as_text()
+			#print(text)
+			var tableNameStart : int = text.find('"', 0)
+			var tableNameEnd : int = text.find('"', tableNameStart +1)
+			prints(tableNameStart, tableNameEnd)
+			var tableName :String = text.substr(tableNameStart+1, tableNameEnd-tableNameStart-1)
+			print(tableName)
+			var parametersStart : int = text.find("GetKey(",0)
+			var parametersEnd : int = text.find("row)", parametersStart + 1)
+			var parameterName : String = text.substr(parametersStart+ 7, parametersEnd - parametersStart -8)
+			print(parameterName)
 			
-#		Creating callbacks
-		content = insert_at_pattern(content, "// Insert Callbacks", "\n	void "+spdb_class+"_OnInsert(EventContext ctx, "+spdb_class+" inserted_row){\n		EmitSignal(SignalName."+spdb_class+"Inserted, inserted_row);\n	}");
-		content = insert_at_pattern(content, "// Update Callbacks", "\n	void "+spdb_class+"_OnUpdate(EventContext ctx, "+spdb_class+" old_row, "+spdb_class+" new_row){\n		EmitSignal(SignalName."+spdb_class+"Updated, old_row, new_row);\n	}");
-		content = insert_at_pattern(content, "// Delete Callbacks", "\n	void "+spdb_class+"_OnDelete(EventContext ctx, "+spdb_class+" deleted_row){\n		EmitSignal(SignalName."+spdb_class+"Deleted, deleted_row);\n	}");
+			content = insert_at_pattern(content, "// Insert Signals", "\n	[Signal]\n	public delegate void "+tableName+"InsertedEventHandler("+parameterName+" inserted_row);");
+			content = insert_at_pattern(content, "// Update Signals", "\n	[Signal]\n	public delegate void "+tableName+"UpdatedEventHandler("+parameterName+" old_row, "+parameterName+" new_row);");
+			content = insert_at_pattern(content, "// Delete Signals", "\n	[Signal]\n	public delegate void "+tableName+"DeletedEventHandler("+parameterName+" deleted_row);");
+			
+#			Adding callbacks
+			content = insert_at_pattern(content, "// Add Insert Callbacks", "\n		conn.Db."+tableName+".OnInsert += "+tableName+"_OnInsert;");
+			content = insert_at_pattern(content, "// Add Update Callbacks", "\n		conn.Db."+tableName+".OnUpdate += "+tableName+"_OnUpdate;");
+			content = insert_at_pattern(content, "// Add Delete Callbacks", "\n		conn.Db."+tableName+".OnDelete += "+tableName+"_OnDelete;");
+			
+#			Creating callbacks
+			content = insert_at_pattern(content, "// Insert Callbacks", "\n	void "+tableName+"_OnInsert(EventContext ctx, "+parameterName+" inserted_row){\n		EmitSignal(SignalName."+tableName+"Inserted, inserted_row);\n	}");
+			content = insert_at_pattern(content, "// Update Callbacks", "\n	void "+tableName+"_OnUpdate(EventContext ctx, "+parameterName+" old_row, "+parameterName+" new_row){\n		EmitSignal(SignalName."+tableName+"Updated, old_row, new_row);\n	}");
+			content = insert_at_pattern(content, "// Delete Callbacks", "\n	void "+tableName+"_OnDelete(EventContext ctx, "+parameterName+" deleted_row){\n		EmitSignal(SignalName."+tableName+"Deleted, deleted_row);\n	}");
 	
-#		Adding the reducers
+	#Adding the reducers
 	var reducers_name = [];
-	for file_name in DirAccess.open("res://module_bindings/Reducers").get_files():
-		if file_name.substr(len(file_name)-3, 3) == ".cs":
+	for file_name in DirAccess.open(modulePath +"/Reducers").get_files():
+		if file_name.get_extension() == "cs":
 			var reducer_name = file_name.substr(0, len(file_name)-5);
 			var reducer_file = FileAccess.open("res://module_bindings/Reducers/"+reducer_name+".g.cs", FileAccess.READ);
 			var reducer_content = reducer_file.get_as_text();
@@ -99,8 +110,9 @@ func upate_spacetime_client():
 		content = insert_at_pattern(content, "// Reducers", "\n\n	public void "+reducer_name+"("+method_arguments+"){\n		if (conn == null){\n			return;\n		}\n		conn.Reducers."+reducer_name+"("+call_arguments+");\n	}");
 			
 #		Update the file with the new content
-		var file = FileAccess.open("res://addons/spacetime_client/BaseSpacetimeClient.cs", FileAccess.WRITE);
-		file.store_string(content);
+	var file = FileAccess.open("res://addons/spacetime_client/BaseSpacetimeClient.cs", FileAccess.WRITE);
+	file.store_string(content);
+	print("finished client")
 		
 func update_module_bindings():
 	print("\nUpdating module bindings...");
@@ -159,6 +171,8 @@ public partial class BaseSpacetimeClient : Node
 	public delegate void SubscriptionAppliedEventHandler();
 	[Signal]
 	public delegate void DisconnectedEventHandler();
+	[Signal]
+	public delegate void ConnectedEventHandler();
 
 	// Insert Signals
 	// Update Signals
@@ -193,6 +207,7 @@ public partial class BaseSpacetimeClient : Node
 		conn.SubscriptionBuilder()
 			.OnApplied(OnSubscriptionApplied)
 			.SubscribeToAllTables();
+		EmitSignal(SignalName.Connected, []);
 	}
 	void OnConnectError(Exception e)
 	{

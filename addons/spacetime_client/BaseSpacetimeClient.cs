@@ -18,6 +18,8 @@ public partial class BaseSpacetimeClient : Node
 	public delegate void SubscriptionAppliedEventHandler();
 	[Signal]
 	public delegate void DisconnectedEventHandler();
+	[Signal]
+	public delegate void ConnectedEventHandler();
 
 	// Insert Signals
 	[Signal]
@@ -27,7 +29,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void UserInfoInsertedEventHandler(UserInfo inserted_row);
 	[Signal]
-	public delegate void UserDoubleConnectedInsertedEventHandler(UserDoubleConnected inserted_row);
+	public delegate void UserDoubleConnectedInsertedEventHandler(UserSus inserted_row);
 	[Signal]
 	public delegate void UserBannedInsertedEventHandler(UserBanned inserted_row);
 	[Signal]
@@ -51,7 +53,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void DisallowedWordsInsertedEventHandler(DisallowedWords inserted_row);
 	[Signal]
-	public delegate void ChatInsertedEventHandler(Chat inserted_row);
+	public delegate void ChatInsertedEventHandler(Message inserted_row);
 	[Signal]
 	public delegate void CharacterStatsInsertedEventHandler(CharacterStats inserted_row);
 	[Signal]
@@ -72,7 +74,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void UserInfoUpdatedEventHandler(UserInfo old_row, UserInfo new_row);
 	[Signal]
-	public delegate void UserDoubleConnectedUpdatedEventHandler(UserDoubleConnected old_row, UserDoubleConnected new_row);
+	public delegate void UserDoubleConnectedUpdatedEventHandler(UserSus old_row, UserSus new_row);
 	[Signal]
 	public delegate void UserBannedUpdatedEventHandler(UserBanned old_row, UserBanned new_row);
 	[Signal]
@@ -96,7 +98,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void DisallowedWordsUpdatedEventHandler(DisallowedWords old_row, DisallowedWords new_row);
 	[Signal]
-	public delegate void ChatUpdatedEventHandler(Chat old_row, Chat new_row);
+	public delegate void ChatUpdatedEventHandler(Message old_row, Message new_row);
 	[Signal]
 	public delegate void CharacterStatsUpdatedEventHandler(CharacterStats old_row, CharacterStats new_row);
 	[Signal]
@@ -117,7 +119,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void UserInfoDeletedEventHandler(UserInfo deleted_row);
 	[Signal]
-	public delegate void UserDoubleConnectedDeletedEventHandler(UserDoubleConnected deleted_row);
+	public delegate void UserDoubleConnectedDeletedEventHandler(UserSus deleted_row);
 	[Signal]
 	public delegate void UserBannedDeletedEventHandler(UserBanned deleted_row);
 	[Signal]
@@ -141,7 +143,7 @@ public partial class BaseSpacetimeClient : Node
 	[Signal]
 	public delegate void DisallowedWordsDeletedEventHandler(DisallowedWords deleted_row);
 	[Signal]
-	public delegate void ChatDeletedEventHandler(Chat deleted_row);
+	public delegate void ChatDeletedEventHandler(Message deleted_row);
 	[Signal]
 	public delegate void CharacterStatsDeletedEventHandler(CharacterStats deleted_row);
 	[Signal]
@@ -184,6 +186,7 @@ public partial class BaseSpacetimeClient : Node
 		conn.SubscriptionBuilder()
 			.OnApplied(OnSubscriptionApplied)
 			.SubscribeToAllTables();
+		EmitSignal(SignalName.Connected, []);
 	}
 	void OnConnectError(Exception e)
 	{
@@ -286,7 +289,7 @@ public partial class BaseSpacetimeClient : Node
 	void UserInfo_OnInsert(EventContext ctx, UserInfo inserted_row){
 		EmitSignal(SignalName.UserInfoInserted, inserted_row);
 	}
-	void UserDoubleConnected_OnInsert(EventContext ctx, UserDoubleConnected inserted_row){
+	void UserDoubleConnected_OnInsert(EventContext ctx, UserSus inserted_row){
 		EmitSignal(SignalName.UserDoubleConnectedInserted, inserted_row);
 	}
 	void UserBanned_OnInsert(EventContext ctx, UserBanned inserted_row){
@@ -322,7 +325,7 @@ public partial class BaseSpacetimeClient : Node
 	void DisallowedWords_OnInsert(EventContext ctx, DisallowedWords inserted_row){
 		EmitSignal(SignalName.DisallowedWordsInserted, inserted_row);
 	}
-	void Chat_OnInsert(EventContext ctx, Chat inserted_row){
+	void Chat_OnInsert(EventContext ctx, Message inserted_row){
 		EmitSignal(SignalName.ChatInserted, inserted_row);
 	}
 	void CharacterStats_OnInsert(EventContext ctx, CharacterStats inserted_row){
@@ -353,7 +356,7 @@ public partial class BaseSpacetimeClient : Node
 	void UserInfo_OnUpdate(EventContext ctx, UserInfo old_row, UserInfo new_row){
 		EmitSignal(SignalName.UserInfoUpdated, old_row, new_row);
 	}
-	void UserDoubleConnected_OnUpdate(EventContext ctx, UserDoubleConnected old_row, UserDoubleConnected new_row){
+	void UserDoubleConnected_OnUpdate(EventContext ctx, UserSus old_row, UserSus new_row){
 		EmitSignal(SignalName.UserDoubleConnectedUpdated, old_row, new_row);
 	}
 	void UserBanned_OnUpdate(EventContext ctx, UserBanned old_row, UserBanned new_row){
@@ -389,7 +392,7 @@ public partial class BaseSpacetimeClient : Node
 	void DisallowedWords_OnUpdate(EventContext ctx, DisallowedWords old_row, DisallowedWords new_row){
 		EmitSignal(SignalName.DisallowedWordsUpdated, old_row, new_row);
 	}
-	void Chat_OnUpdate(EventContext ctx, Chat old_row, Chat new_row){
+	void Chat_OnUpdate(EventContext ctx, Message old_row, Message new_row){
 		EmitSignal(SignalName.ChatUpdated, old_row, new_row);
 	}
 	void CharacterStats_OnUpdate(EventContext ctx, CharacterStats old_row, CharacterStats new_row){
@@ -420,7 +423,7 @@ public partial class BaseSpacetimeClient : Node
 	void UserInfo_OnDelete(EventContext ctx, UserInfo deleted_row){
 		EmitSignal(SignalName.UserInfoDeleted, deleted_row);
 	}
-	void UserDoubleConnected_OnDelete(EventContext ctx, UserDoubleConnected deleted_row){
+	void UserDoubleConnected_OnDelete(EventContext ctx, UserSus deleted_row){
 		EmitSignal(SignalName.UserDoubleConnectedDeleted, deleted_row);
 	}
 	void UserBanned_OnDelete(EventContext ctx, UserBanned deleted_row){
@@ -456,7 +459,7 @@ public partial class BaseSpacetimeClient : Node
 	void DisallowedWords_OnDelete(EventContext ctx, DisallowedWords deleted_row){
 		EmitSignal(SignalName.DisallowedWordsDeleted, deleted_row);
 	}
-	void Chat_OnDelete(EventContext ctx, Chat deleted_row){
+	void Chat_OnDelete(EventContext ctx, Message deleted_row){
 		EmitSignal(SignalName.ChatDeleted, deleted_row);
 	}
 	void CharacterStats_OnDelete(EventContext ctx, CharacterStats deleted_row){
