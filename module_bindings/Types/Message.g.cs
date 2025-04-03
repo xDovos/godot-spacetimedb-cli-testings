@@ -12,7 +12,7 @@ namespace SpacetimeDB.Types
 {
     [SpacetimeDB.Type]
     [DataContract]
-    public sealed partial class Message : RefCounted
+    public sealed partial class Message: RefCounted
     {
         [DataMember(Name = "id")]
         public uint Id;
@@ -46,4 +46,3 @@ namespace SpacetimeDB.Types
         }
     }
 }
-

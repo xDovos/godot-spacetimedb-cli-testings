@@ -13,6 +13,7 @@ func _on_print_logs_pressed() -> void:
 		rich_text_label.append_text("Module name emtpy")
 		return
 	command.append(moduleName)
+	
 	var serverName = server_line_edit.text
 	if(serverName.is_empty()):
 		rich_text_label.append_text("server name emtpy")

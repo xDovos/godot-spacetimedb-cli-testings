@@ -1,0 +1,19 @@
+using Godot;
+using System;
+
+namespace Godot
+{
+	[GlobalClass]
+	public partial class //TypeName : Resource
+	{
+		//Exports
+		
+		public //TypeName(
+			SpacetimeDB.Types.//TypeName row
+			)
+		{
+			//Constructor
+			
+		}
+	}
+}

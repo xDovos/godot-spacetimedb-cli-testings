@@ -1,4 +1,3 @@
-
 #nullable enable
 
 using Godot;
@@ -8,8 +7,8 @@ using SpacetimeDB.Types;
 
 public partial class BaseSpacetimeClient : Node
 {
-	const string HOST = "http://localhost:3000";
-	const string MODULE = "servertest";
+	const string HOST;
+	const string MODULE;
 
 	public Identity? local_identity = null;
 	public DbConnection? conn = null;
@@ -22,6 +21,8 @@ public partial class BaseSpacetimeClient : Node
 	public delegate void ConnectedEventHandler();
 
 	// Insert Signals
+	// Update Signals
+	// Delete Signals
 
 	public override void _Ready()
 	{
@@ -74,110 +75,16 @@ public partial class BaseSpacetimeClient : Node
 
 	void RegisterCallbacks(DbConnection conn)
 	{
-
+		// Add Insert Callbacks
+		// Add Update Callbacks
+		// Add Delete Callbacks
 	}
 
 	// Insert Callbacks
+	// Update Callbacks
+	// Delete Callbacks
 	
 	// Reducers
-
-	public void WriteToLogs(string text){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.WriteToLogs(text);
-	}
-
-	public void StartActiveTaks(uint characterId, uint taskId){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.StartActiveTaks(characterId,taskId);
-	}
-
-	public void SetUserName(string name){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.SetUserName(name);
-	}
-
-	public void SendChatMessage(string charName, string text){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.SendChatMessage(charName,text);
-	}
-
-	public void ModTool(string command, System.Collections.Generic.List<string> args){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.ModTool(command,args);
-	}
-
-	public void DeleteCharacter(string name){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.DeleteCharacter(name);
-	}
-
-	public void CreateCharacter(string name){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.CreateCharacter(name);
-	}
-
-	public void Connect(){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.Connect();
-	}
-
-	public void AddTexturesTexture(Textures texture){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.AddTexturesTexture(texture);
-	}
-
-	public void AddTaskTableTask(TaskTable task, System.Collections.Generic.List<TaskRequirementTable> requirements, System.Collections.Generic.List<TaskRewardTable> reward){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.AddTaskTableTask(task,requirements,reward);
-	}
-
-	public void AddStatsTableStat(StatTable stat){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.AddStatsTableStat(stat);
-	}
-
-	public void AddSkillTableSkill(SkillTable skill){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.AddSkillTableSkill(skill);
-	}
-
-	public void AddItemTableItem(ItemTable item){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.AddItemTableItem(item);
-	}
-
-	public void ActiveTaskHandler(ActiveTasks activeTask){
-		if (conn == null){
-			return;
-		}
-		conn.Reducers.ActiveTaskHandler(activeTask);
-	}
 
 	// On sync data
 	void OnSubscriptionApplied(SubscriptionEventContext ctx)

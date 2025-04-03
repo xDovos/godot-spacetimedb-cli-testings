@@ -8,33 +8,15 @@ var default_config;
 @export_tool_button("Generate_Bindings") var bindings = _on_generate_bindings_btn_pressed
 
 func _ready() -> void:
-	default_config = {"server_path": $ServerPath.text, "Host": $Host.text, "Module": $Module.text}
-	var config_file = FileAccess.open(OS.get_user_data_dir() + "/spacetime_client_config.json", FileAccess.READ);
-	if config_file == null:
-		config = default_config
-	else:
-		config = JSON.parse_string(config_file.get_as_text());
-		if config == null:
-			config = default_config
-	
-	$ServerPath.text = config["server_path"]
-	$Host.text = config["Host"]
-	$Module.text = config["Module"]
+	pass
 
 func _on_generate_client_btn_pressed() -> void:
 	upate_spacetime_client()
-	save_config()
 
 func _on_generate_bindings_btn_pressed() -> void:
 	update_module_bindings()
-	save_config()
 
-func save_config():
-	config["server_path"] = $ServerPath.text
-	config["Host"] = $Host.text
-	config["Module"] = $Module.text
-	var config_file = FileAccess.open(OS.get_user_data_dir() + "/spacetime_client_config.json", FileAccess.WRITE);
-	config_file.store_string(JSON.stringify(config))
+
 
 func upate_spacetime_client():
 	print("\nModifying the BaseSpacetimeClient...");
@@ -65,9 +47,9 @@ func upate_spacetime_client():
 			var parameterName : String = text.substr(parametersStart+ 7, parametersEnd - parametersStart -8)
 			print(parameterName)
 			
-			content = insert_at_pattern(content, "// Insert Signals", "\n	[Signal]\n	public delegate void "+tableName+"InsertedEventHandler("+parameterName+" inserted_row);");
-			content = insert_at_pattern(content, "// Update Signals", "\n	[Signal]\n	public delegate void "+tableName+"UpdatedEventHandler("+parameterName+" old_row, "+parameterName+" new_row);");
-			content = insert_at_pattern(content, "// Delete Signals", "\n	[Signal]\n	public delegate void "+tableName+"DeletedEventHandler("+parameterName+" deleted_row);");
+			content = insert_at_pattern(content, "// Insert Signals", "\n	[Signal]\n	public delegate void "+tableName+"InsertedEventHandler(Godot."+parameterName+" inserted_row);");
+			content = insert_at_pattern(content, "// Update Signals", "\n	[Signal]\n	public delegate void "+tableName+"UpdatedEventHandler(Godot."+parameterName+" old_row, SpacetimeDB.Types."+parameterName+" new_row);");
+			content = insert_at_pattern(content, "// Delete Signals", "\n	[Signal]\n	public delegate void "+tableName+"DeletedEventHandler(Godot."+parameterName+" deleted_row);");
 			
 #			Adding callbacks
 			content = insert_at_pattern(content, "// Add Insert Callbacks", "\n		conn.Db."+tableName+".OnInsert += "+tableName+"_OnInsert;");
@@ -75,10 +57,10 @@ func upate_spacetime_client():
 			content = insert_at_pattern(content, "// Add Delete Callbacks", "\n		conn.Db."+tableName+".OnDelete += "+tableName+"_OnDelete;");
 			
 #			Creating callbacks
-			content = insert_at_pattern(content, "// Insert Callbacks", "\n	void "+tableName+"_OnInsert(EventContext ctx, "+parameterName+" inserted_row){\n		EmitSignal(SignalName."+tableName+"Inserted, inserted_row);\n	}");
-			content = insert_at_pattern(content, "// Update Callbacks", "\n	void "+tableName+"_OnUpdate(EventContext ctx, "+parameterName+" old_row, "+parameterName+" new_row){\n		EmitSignal(SignalName."+tableName+"Updated, old_row, new_row);\n	}");
-			content = insert_at_pattern(content, "// Delete Callbacks", "\n	void "+tableName+"_OnDelete(EventContext ctx, "+parameterName+" deleted_row){\n		EmitSignal(SignalName."+tableName+"Deleted, deleted_row);\n	}");
-	
+			content = insert_at_pattern(content, "// Insert Callbacks", "\n	void "+tableName+"_OnInsert(EventContext ctx, SpacetimeDB.Types."+parameterName+" inserted_row){\n		EmitSignal(SignalName."+tableName+"Inserted, inserted_row);\n	}");
+			content = insert_at_pattern(content, "// Update Callbacks", "\n	void "+tableName+"_OnUpdate(EventContext ctx, SpacetimeDB.Types."+parameterName+" old_row, SpacetimeDB.Types."+parameterName+" new_row){\n		EmitSignal(SignalName."+tableName+"Updated, old_row, new_row);\n	}");
+			content = insert_at_pattern(content, "// Delete Callbacks", "\n	void "+tableName+"_OnDelete(EventContext ctx, SpacetimeDB.Types."+parameterName+" deleted_row){\n		EmitSignal(SignalName."+tableName+"Deleted, deleted_row);\n	}");
+
 	#Adding the reducers
 	var reducers_name = [];
 	for file_name in DirAccess.open(modulePath +"/Reducers").get_files():
@@ -113,7 +95,8 @@ func upate_spacetime_client():
 	var file = FileAccess.open("res://addons/spacetime_client/BaseSpacetimeClient.cs", FileAccess.WRITE);
 	file.store_string(content);
 	print("finished client")
-		
+
+
 func update_module_bindings():
 	print("\nUpdating module bindings...");
 	var server_path = $ServerPath.text;
@@ -135,7 +118,6 @@ func update_module_bindings():
 			content = insert_at_pattern(content, "using System.Runtime.Serialization;", "\nusing Godot;");
 #			Adding the GodotObject extension class
 			content = insert_at_pattern(content, "class "+ spacetime_type_name, ": RefCounted");
-			
 			file.store_string(content)
 
 func insert_str(content: String, start_idx: int, value: String) -> String:

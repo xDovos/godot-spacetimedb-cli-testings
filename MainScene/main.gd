@@ -4,16 +4,18 @@ extends Control
 @onready var publish_control: Control = $HBoxContainer/MarginContainer2/PublishControl
 @onready var schema_control: Control = $HBoxContainer/MarginContainer2/SchemaControl
 @onready var sql_control: Control = $HBoxContainer/MarginContainer2/SQLControl
+@onready var client_control: Control = $HBoxContainer/MarginContainer2/ClientControl
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	pass
 	# Replace with function body.
-	SpacetimeClient.Connected.connect(func(): SpacetimeClient.Connect(); SpacetimeClient.SendChatMessage("Dovos", "hi"))
+	#SpacetimeClient.Connected.connect(func(): SpacetimeClient.Connect())
+	#SpacetimeClient.ChatInserted.connect(newMessage)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
 
 
 func _on_logs_button_toggled(toggled_on: bool) -> void:
@@ -34,3 +36,7 @@ func _on_reducers_button_toggled(toggled_on: bool) -> void:
 
 func _on_schema_button_toggled(toggled_on: bool) -> void:
 	schema_control.visible = toggled_on # Replace with function body.
+
+
+func _on_client_button_toggled(toggled_on: bool) -> void:
+	client_control.visible = toggled_on # Replace with function body.
