@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace Godot
 {
@@ -13,6 +14,15 @@ namespace Godot
 			)
 		{
 			//Constructor
+			
+		}
+		
+		public SpacetimeDB.Types.//TypeName ToStdb()
+		{
+			SpacetimeDB.Types.//TypeName type = new();
+			//ToStdb
+			
+			return type;
 			
 		}
 	}

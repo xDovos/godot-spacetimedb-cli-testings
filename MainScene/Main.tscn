@@ -89,6 +89,7 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="LogsControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("3_r0du0")]
+visible = false
 layout_mode = 2
 
 [node name="SQLControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("5_3dbgo")]
@@ -100,11 +101,11 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 1
 
-[node name="SchemaControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("6_3dxm6")]
+[node name="ClientControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("8_8xi1u")]
 visible = false
 layout_mode = 2
 
-[node name="ClientControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("8_8xi1u")]
+[node name="SchemaControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("6_3dxm6")]
 visible = false
 layout_mode = 2
 

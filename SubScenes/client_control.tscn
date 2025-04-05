@@ -43,7 +43,6 @@ text = "D:\\GodotGames\\STDB_Server\\server"
 
 [node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Client Module Bindings Path"
 
 [node name="ClientBindingsLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
@@ -53,13 +52,26 @@ text = "D:\\GodotGames\\spacetimedb-cli\\module_bindings"
 
 [node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 text = "Client BaseSpacetimeClient Path"
 
 [node name="StClientPathLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "D:\\GodotGames\\spacetimedb-cli\\addons\\spacetime_client\\BaseSpacetimeClient.cs"
+
+[node name="Label4" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Server"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Module Name"
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
