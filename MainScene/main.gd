@@ -1,5 +1,6 @@
 extends Control
 
+@onready var server_control: Control = $HBoxContainer/MarginContainer2/ServerControl
 @onready var logs_control: Control = $HBoxContainer/MarginContainer2/LogsControl
 @onready var publish_control: Control = $HBoxContainer/MarginContainer2/PublishControl
 @onready var schema_control: Control = $HBoxContainer/MarginContainer2/SchemaControl
@@ -40,3 +41,7 @@ func _on_schema_button_toggled(toggled_on: bool) -> void:
 
 func _on_client_button_toggled(toggled_on: bool) -> void:
 	client_control.visible = toggled_on # Replace with function body.
+
+
+func _on_server_button_toggled(toggled_on: bool) -> void:
+	server_control.visible = toggled_on # Replace with function body.

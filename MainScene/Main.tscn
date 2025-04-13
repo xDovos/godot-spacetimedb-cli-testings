@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://4ltx33ispet1"]
+[gd_scene load_steps=10 format=3 uid="uid://4ltx33ispet1"]
 
 [ext_resource type="ButtonGroup" uid="uid://bei5ypa7cxe1p" path="res://MainScene/MenuButtonGroup.tres" id="1_glv2v"]
 [ext_resource type="Theme" uid="uid://cggdycwr4g45p" path="res://MainScene/new_theme.tres" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://cv71qwuo2xwj3" path="res://MainScene/main.gd" id="2_fos0i"]
-[ext_resource type="PackedScene" uid="uid://bay20k4s5othg" path="res://SubScenes/logs_control.tscn" id="3_r0du0"]
-[ext_resource type="PackedScene" uid="uid://dgmtwgyqk5rts" path="res://SubScenes/publish_control.tscn" id="4_cm0pq"]
-[ext_resource type="PackedScene" uid="uid://b73w2uv368ylh" path="res://SubScenes/sql_control.tscn" id="5_3dbgo"]
-[ext_resource type="PackedScene" uid="uid://ct0e2xtdkb41e" path="res://SubScenes/schema_control.tscn" id="6_3dxm6"]
-[ext_resource type="PackedScene" uid="uid://bvpcvsfd6q07n" path="res://SubScenes/client_control.tscn" id="8_8xi1u"]
+[ext_resource type="PackedScene" uid="uid://bay20k4s5othg" path="res://MainScene/SubScenes/logs_control.tscn" id="3_r0du0"]
+[ext_resource type="PackedScene" uid="uid://dgmtwgyqk5rts" path="res://MainScene/SubScenes/publish_control.tscn" id="4_cm0pq"]
+[ext_resource type="PackedScene" uid="uid://b5bfm74sa3eyw" path="res://MainScene/SubScenes/server_control.tscn" id="4_eo7vj"]
+[ext_resource type="PackedScene" uid="uid://b73w2uv368ylh" path="res://MainScene/SubScenes/sql_control.tscn" id="5_3dbgo"]
+[ext_resource type="PackedScene" uid="uid://ct0e2xtdkb41e" path="res://MainScene/SubScenes/schema_control.tscn" id="6_3dxm6"]
+[ext_resource type="PackedScene" uid="uid://bvpcvsfd6q07n" path="res://MainScene/SubScenes/client_control.tscn" id="8_8xi1u"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -40,10 +41,16 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="LogsButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+[node name="ServerButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
+button_group = ExtResource("1_glv2v")
+text = "Server/Connect"
+
+[node name="LogsButton" type="Button" parent="HBoxContainer/MarginContainer/Navigation"]
+layout_mode = 2
+toggle_mode = true
 button_group = ExtResource("1_glv2v")
 text = "Logs"
 
@@ -88,6 +95,9 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
+[node name="ServerControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("4_eo7vj")]
+layout_mode = 2
+
 [node name="LogsControl" parent="HBoxContainer/MarginContainer2" instance=ExtResource("3_r0du0")]
 visible = false
 layout_mode = 2
@@ -109,6 +119,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/ServerButton" to="." method="_on_server_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/LogsButton" to="." method="_on_logs_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/SQLButton" to="." method="_on_sql_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/MarginContainer/Navigation/PublishButton" to="." method="_on_publish_button_toggled"]
