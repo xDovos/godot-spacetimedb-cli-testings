@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bay20k4s5othg"]
 
-[ext_resource type="Script" uid="uid://c7hysixyvvvjx" path="res://SubScenes/logs_control.gd" id="1_tw3hd"]
+[ext_resource type="Script" uid="uid://c7hysixyvvvjx" path="res://MainScene/SubScenes/logs_control.gd" id="1_tw3hd"]
 
 [node name="LogsControl" type="Control"]
 layout_mode = 3

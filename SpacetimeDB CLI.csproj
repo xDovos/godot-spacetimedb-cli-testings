@@ -1,0 +1,19 @@
+<Project Sdk="Godot.NET.Sdk/4.4.1">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>SpacetimeDBCLI</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SpacetimeDB.ClientSDK" Version="1.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="addons\spacetime_client\" />
+    <Folder Include="module_bindings\Reducers\" />
+    <Folder Include="module_bindings\Tables\" />
+    <Folder Include="module_bindings\Types\" />
+    <Folder Include="Templates\BaseTypes\" />
+  </ItemGroup>
+  
+</Project>
