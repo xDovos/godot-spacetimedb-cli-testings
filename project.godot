@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 
 [autoload]
 
-SpacetimeClient="*res://addons/spacetime_client/SpacetimeClient.cs"
+SpacetimeClient="*res://Autoloads/SpacetimeClient.cs"
 
 [display]
 
