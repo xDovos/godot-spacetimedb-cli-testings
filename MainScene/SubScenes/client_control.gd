@@ -264,54 +264,59 @@ func upate_spacetime_client():
 			content = insert_at_pattern(content, "// Delete Callbacks", "\n	void "+tableName+"_OnDelete(EventContext ctx, "+StdbParameterTypeName+" deleted_row){\n"+CallbackCodeblockDelete+"\n	}");
 			
 	
+
+	#
+	#Adding the reducers
+	var reducers_name = [];
+	for file_name in DirAccess.open(bindings_path +"/Reducers").get_files():
+		if file_name.get_extension() == "cs":
+			var reducer_name = file_name.substr(0, len(file_name)-5);
+			var reducer_file = FileAccess.open(bindings_path+"/Reducers/"+reducer_name+".g.cs", FileAccess.READ);
+			var reducer_content = reducer_file.get_as_text();
+			var pattern = "public void "+reducer_name+"(";
+			var start_reducer_method_index = reducer_content.find(pattern);
+			if start_reducer_method_index >= 0:
+				reducers_name.append(reducer_name);
+	
+	for reducer_name in reducers_name:
+		var reducer_file = FileAccess.open(bindings_path+"/Reducers/"+reducer_name+".g.cs", FileAccess.READ);
+		var reducer_content = reducer_file.get_as_text();
+		var pattern = "public void "+reducer_name+"(";
+		var start_reducer_method_index = reducer_content.find(pattern) + len(pattern);
+		var method_arguments = ""
+		
+		var char = '';
+		while char != ')':
+			method_arguments += char;
+			char = reducer_content[start_reducer_method_index]
+			start_reducer_method_index += 1
+		if method_arguments.is_empty():
+			continue
+		var var_names :Array= method_arguments.split(" ")
+		var call_string : String = ""
+		var parameterString :String = ""
+		
+		var parameterDict : Dictionary[int, Array] ={}
+		for k in var_names.size():
+			if k % 2 == 1:
+				parameterDict[k-1].append(var_names[k].trim_suffix(","))
+			else: 
+				parameterDict[k] = [var_names[k]]
+		for array in parameterDict.values():
+			if csharp_data_types.any(func(dtype): return array[0].contains(dtype)):
+				parameterString += array[0] + " " + array[1] + ", "
+				call_string += array[1] + ", "
+			else:
+				parameterString += "Godot."+ array[0] + " " + array[1] + ", "
+				call_string += array[1] + ".ToStdb(), "
+		parameterString = parameterString.trim_suffix(", ")
+		call_string = call_string.trim_suffix(", ")
+		var ReducerString : String = "\n\n	public void "+reducer_name+"("+parameterString+")\n"
+		ReducerString += "		{\n		if (conn == null){\n			return;\n		}\n"
+		ReducerString += "			conn.Reducers."+reducer_name+"("+call_string+");\n	}"
+		content = insert_at_pattern(content, "// Reducers", ReducerString);
+		
+		#Update the file with the new content
 	file = FileAccess.open(bindings_path + "/BaseSpacetimeClient.cs", FileAccess.WRITE);
 	file.store_string(content);
 	print("finished client")
-	#
-	##Adding the reducers
-	#var reducers_name = [];
-	#for file_name in DirAccess.open(bindings_path +"/Reducers").get_files():
-		#if file_name.get_extension() == "cs":
-			#var reducer_name = file_name.substr(0, len(file_name)-5);
-			#var reducer_file = FileAccess.open(bindings_path+"/Reducers/"+reducer_name+".g.cs", FileAccess.READ);
-			#var reducer_content = reducer_file.get_as_text();
-			#var pattern = "public void "+reducer_name+"(";
-			#var start_reducer_method_index = reducer_content.find(pattern);
-			#if start_reducer_method_index >= 0:
-				#reducers_name.append(reducer_name);
-	#
-	#for reducer_name in reducers_name:
-		#var reducer_file = FileAccess.open(bindings_path+"/Reducers/"+reducer_name+".g.cs", FileAccess.READ);
-		#var reducer_content = reducer_file.get_as_text();
-		#var pattern = "public void "+reducer_name+"(";
-		#var start_reducer_method_index = reducer_content.find(pattern) + len(pattern);
-		#var method_arguments = ""
-		#
-		#var char = '';
-		#while char != ')':
-			#method_arguments += char;
-			#char = reducer_content[start_reducer_method_index]
-			#start_reducer_method_index += 1
-		#var var_names :Array= method_arguments.split(", ")
-		#var call_arguments : Array = []
-		#var parameterString :String = ""
-		#var ReducerString : String = "\n\n	public void "+reducer_name+"("
-		#for k in var_names.size():
-			#if k % 2 == 1:
-				#call_arguments.append(var_names[k]);
-				#parameterString += var_names[k] + ", "
-				#
-			#else: 
-				#if csharp_data_types.any(func(dtype): return var_names[k].contains(dtype)):
-					#parameterString += var_names[k] + " "
-				#else:
-					#parameterString += "Godot."+ var_names[k]
-		#
-		#
-		#
-		##if (conn == null){\n			return;\n		}\n
-		##conn.Reducers."+reducer_name+"("+", ".join(call_arguments)+");\n	}"
-		#
-		#content = insert_at_pattern(content, "// Reducers", ReducerString);
-		#
-#		Update the file with the new content
