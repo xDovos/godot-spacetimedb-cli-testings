@@ -52,16 +52,16 @@ text = "D:\\GodotGames\\spacetimedb-cli\\module_bindings"
 
 [node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Client BaseSpacetimeClient Path"
+text = "Client SpacetimeClient Autoload Path"
 
 [node name="StClientPathLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "D:\\GodotGames\\spacetimedb-cli\\addons\\spacetime_client\\SpacetimeClient.cs"
+text = "D:\\GodotGames\\spacetimedb-cli\\Autoloads\\SpacetimeClient.cs"
 
 [node name="Label4" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Server"
+text = "Server (Local == Localhost, Maincloud == maincloud)"
 
 [node name="ServerLineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -77,7 +77,7 @@ text = "servertest"
 
 [node name="Label6" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Reset Client"
+text = "Reset client and code gen"
 
 [node name="ResetCheckBox" type="CheckBox" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
